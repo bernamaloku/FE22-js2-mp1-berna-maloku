@@ -7,7 +7,7 @@ const cScore = document.getElementById("comp-score");
 const resultatStatus = document.getElementById("resultat-status");
 const highScoreList = document.querySelector("ol");
 
-
+//koden skapar en event-lyssnare för en knapp som när den klickas på hämtar namnet från ett input-element och sparar det tillsammans med en poäng i en objektvariabel. Därefter anropas funktionen sparaResultat() med objektet som parameter.
 playButton.onclick = async function (event) {
   event.preventDefault();
   const spelareNamn = namnInput.value;
@@ -33,8 +33,7 @@ const STEN = "STEN";
 const PÅSE = "PÅSE";
 const SAX = "SAX";
 
-//Koden lägger till händelseavlyssnare till tre HTML-element med ID:n "sten", "påse" och "sax". När varje element klickas anropas motsvarande anonyma funktion, som anropar handleButton-funktionen med argumentet som motsvarar det konstanta värdet på den klickade(pressed) knappen ("STEN", "PÅSE", eller "SAX").
-
+//när varje knapp klickas anropas motsvarande anonyma funktion, som anropar handleButton-funktionen med argumentet som motsvarar det konstanta värdet på den klickade(pressed) knappen ("STEN", "PÅSE", eller "SAX").
 async function handleButton(buttonVal) {
   pVal = buttonVal;
   await valueResults();
@@ -55,8 +54,7 @@ sax.addEventListener("click", async function (event) {
   await handleButton(SAX);
 });
 
-//Detta är en funktion som hämtar highscore från firebase och visar den på sidan.
-
+//funktion som hämtar highscore från firebase och visar den på sidan.
 const url = `https://js2-mp1-7c90e-default-rtdb.europe-west1.firebasedatabase.app/users.json`;
 
 async function visaHighScore() {
@@ -74,8 +72,7 @@ async function visaHighScore() {
 
 visaHighScore();
 
-//Detta är en funktion som jämför spelarens val med datorns val. Den visar sedan vem som vann eller om det var oavgjort.
-
+//detta är en funktion som jämför spelarens val med datorns val. Den visar sedan vem som vann eller om det var oavgjort.
 async function valueResults() {
   const cVal = visaDatorVal();
   let vinnare;
@@ -98,8 +95,7 @@ async function valueResults() {
   slutaSpel();
 }
 
-//Detta är en funktion som returnerar ett slumpmässigt värde från en array. Funktionen tar inga argument. Funktionen använder Math-objektet för att generera ett slumptal mellan 0 och 2, som sedan används som ett index för value arrayn.
-
+//för att visa datorns val krävs det en funktion som tar en array med tre värden och returnerar ett av dem slumpmässigt. Den andra funktionen används för att stoppa spelet när det är över.
 function visaDatorVal() {
   const values = ["STEN", "PÅSE", "SAX"];
   const randomIndex = Math.floor(Math.random() * values.length);
@@ -111,15 +107,14 @@ function slutaSpel() {
   }
 }
 
-//Detta är en funktion som hämtar data från ett API och returnerar det.
+//hämtar data från ett API och returnerar det.
 async function hämtaHighscores() {
   const response = await fetch(url);
   const data = await response.json();
   return data;
 }
 
-//Detta är en funktion som sparar poängen till ett API. Det krävs ett argument. Funktionen använder hämtning för att skicka en PUT-förfrågan med poängen som body. Om det misslyckas, ger det ett fel och loggar det i konsolen.
-
+// async funktion som hämtar data från ett API och returnerar det. Den tar URL:en som en parameter. 
 async function hämtaLista() {
   const fetchUrl = await fetch(url);
   const data = await fetchUrl.json();
@@ -127,6 +122,7 @@ async function hämtaLista() {
   arrayList = användare;
 }
 
+//en funktion som tar in ett objekt som parameter och retunerar sant eller falskt. Den kollar så att namnet på arrayList matchar med namnet av användare på obj.
 function uppdateraAnvandare(obj) {
   return arrayList.some((user) => {
     if (user.name === obj.name) {
@@ -136,6 +132,7 @@ function uppdateraAnvandare(obj) {
   });
 }
 
+//funktion som sparar spelarens poäng. Det krävs ett argument, vilket är spelarens poäng.
 async function sparaResultat(score) {
   await hämtaLista();
 
@@ -168,7 +165,7 @@ async function sparaResultat(score) {
   }
 }
 
-//Detta är en funktion som återställer poängen till 0. Den tar inga argument och returnerar ingenting. Funktionen använder två andra funktioner, uppdateraPoäng och uppdateraText, för att uppdatera poängen i DOM.
+//återställer poängen till 0. 
 function spelaOm() {
   spelarVinst = 0;
   uppdateraPoäng(pScore, spelarVinst);
