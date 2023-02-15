@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+
+    <script src="./js/script.js" defer></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="main-container">
+      <form>
+        <label id="namn-input" for="spelar-namn"> Namn: </label>
+        <input
+          type="text"
+          id="spelare-namn"
+          placeholder="skriv ditt namn här"
+        />
+        <button id="spela-knapp">Spela!</button>
+        <h2 id="dator-vs">Dator vs.  </h2>
+        <p>Välj en av tre:</p>
+      </form>
+      <section class="button-delar">
+        <button id="sten-btn" class="btn">STEN</button>
+        <button id="påse-btn" class="btn">PAPER</button>
+        <button id="sax-btn" class="btn">SAX</button>
+      </section>        <br>
+
+      <div class="spel-resultat">
+        <div>
+          Poäng:
+          <span id="spelare-score" class="resultat-spel"> 0 </span>
+        </div>
+        <h2 id="resultat-status"></h2>
+      <div class="först-board">
+        <h3>Highscores:</h3>
+        <ol></ol>
+      </div>
+    </div>
+  </body>
+</html>
