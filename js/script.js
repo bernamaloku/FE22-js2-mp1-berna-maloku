@@ -84,9 +84,9 @@ async function valueResults() {
   } else {
     spelarVinst++;
     vinnare = "DU VANN!";
-    let obj = { name: namnInput.value, score: spelarVinst };
-    await sparaResultat(obj);
   }
+  let obj = { name: namnInput.value, score: spelarVinst };
+  await sparaResultat(obj);
   resultatStatus.textContent = `Datorn valde ${cVal} och du valde ${pVal}! ${vinnare} `;
   slutaSpel();
 }
