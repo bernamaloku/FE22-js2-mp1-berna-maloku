@@ -8,7 +8,7 @@ const resultatStatus = document.getElementById("resultat-status");
 const highScoreList = document.querySelector("ol");
 
 //koden skapar en event-lyssnare för en knapp som när den klickas på hämtar namnet från ett input-element och sparar det tillsammans med en poäng i en objektvariabel. Därefter anropas funktionen sparaResultat() med objektet som parameter.
-playButton.onclick = async function (event) {
+playButton.addEventListener("click", async (event) => {
   event.preventDefault();
   const spelareNamn = namnInput.value;
   statusText.textContent += spelareNamn;
@@ -16,9 +16,7 @@ playButton.onclick = async function (event) {
   namnInput.style.display = "none";
   playButton.style.display = "none";
   console.log(spelareNamn);
-  let obj = { name: spelareNamn, score: 0 };
-  await sparaResultat(obj);
-};
+});
 
 let pVal;
 let cVal;
@@ -124,7 +122,10 @@ async function hämtaLista() {
 
 //en funktion som tar in ett objekt som parameter och retunerar sant eller falskt. Den kollar så att namnet på arrayList matchar med namnet av användare på obj.
 function uppdateraAnvandare(obj) {
+  console.log("input object: ", obj);
+  console.log('obj.name:', obj.name);
   return arrayList.some((user) => {
+    console.log("current user: ", user);
     if (user.name === obj.name) {
       if (obj.score > user.score) user.score = obj.score;
       return true;
