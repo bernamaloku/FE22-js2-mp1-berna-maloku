@@ -7,7 +7,8 @@ const cScore = document.getElementById("comp-score");
 const resultatStatus = document.getElementById("resultat-status");
 const highScoreList = document.querySelector("ol");
 
-//koden skapar en event-lyssnare för en knapp som när den klickas på hämtar namnet från ett input-element och sparar det tillsammans med en poäng i en objektvariabel. Därefter anropas funktionen sparaResultat() med objektet som parameter.
+
+
 playButton.addEventListener("click", async (event) => {
   event.preventDefault();
   const spelareNamn = namnInput.value;
@@ -16,7 +17,7 @@ playButton.addEventListener("click", async (event) => {
   namnInput.style.display = "none";
   playButton.style.display = "none";
   console.log(spelareNamn);
-});
+})
 
 let pVal;
 let cVal;
@@ -31,7 +32,6 @@ const STEN = "STEN";
 const PÅSE = "PÅSE";
 const SAX = "SAX";
 
-//när varje knapp klickas anropas motsvarande anonyma funktion, som anropar handleButton-funktionen med argumentet som motsvarar det konstanta värdet på den klickade(pressed) knappen ("STEN", "PÅSE", eller "SAX").
 async function handleButton(buttonVal) {
   pVal = buttonVal;
   await valueResults();
@@ -52,7 +52,6 @@ sax.addEventListener("click", async function (event) {
   await handleButton(SAX);
 });
 
-//funktion som hämtar highscore från firebase och visar den på sidan.
 const url = `https://js2-mp1-7c90e-default-rtdb.europe-west1.firebasedatabase.app/users.json`;
 
 async function visaHighScore() {
@@ -70,7 +69,6 @@ async function visaHighScore() {
 
 visaHighScore();
 
-//detta är en funktion som jämför spelarens val med datorns val. Den visar sedan vem som vann eller om det var oavgjort.
 async function valueResults() {
   const cVal = visaDatorVal();
   let vinnare;
@@ -93,7 +91,6 @@ async function valueResults() {
   slutaSpel();
 }
 
-//för att visa datorns val krävs det en funktion som tar en array med tre värden och returnerar ett av dem slumpmässigt. Den andra funktionen används för att stoppa spelet när det är över.
 function visaDatorVal() {
   const values = ["STEN", "PÅSE", "SAX"];
   const randomIndex = Math.floor(Math.random() * values.length);
@@ -105,22 +102,6 @@ function slutaSpel() {
   }
 }
 
-//hämtar data från ett API och returnerar det.
-async function hämtaHighscores() {
-  const response = await fetch(url);
-  const data = await response.json();
-  return data;
-}
-
-// async funktion som hämtar data från ett API och returnerar det. Den tar URL:en som en parameter. 
-async function hämtaLista() {
-  const fetchUrl = await fetch(url);
-  const data = await fetchUrl.json();
-  const användare = Object.values(data);
-  arrayList = användare;
-}
-
-//en funktion som tar in ett objekt som parameter och retunerar sant eller falskt. Den kollar så att namnet på arrayList matchar med namnet av användare på obj.
 function uppdateraAnvandare(obj) {
   console.log("input object: ", obj);
   console.log('obj.name:', obj.name);
@@ -133,24 +114,42 @@ function uppdateraAnvandare(obj) {
   });
 }
 
-//funktion som sparar spelarens poäng. Det krävs ett argument, vilket är spelarens poäng.
+
+async function hämtaHighscores() {
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}
+
+async function hämtaLista() {
+  const fetchUrl = await fetch(url);
+  const data = await fetchUrl.json();
+  const användare = Object.values(data);
+  if (användare.length > 0)
+  arrayList = användare;
+
+}
+
+
+
 async function sparaResultat(score) {
   await hämtaLista();
 
   if (!uppdateraAnvandare(score)) {
     arrayList.push(score);
   }
-
+  
   function jämföraTvåRes(score1, score2) {
     return score2.score - score1.score;
   }
+
   arrayList.sort(jämföraTvåRes);
 
   const options = {
     method: "PUT",
     body: JSON.stringify(arrayList),
     headers: {
-      "content-type": "application/json; charset=UTF-8",
+      "Content-type": "application/json; charset=UTF-8",
     },
   };
 
@@ -166,7 +165,6 @@ async function sparaResultat(score) {
   }
 }
 
-//återställer poängen till 0. 
 function spelaOm() {
   spelarVinst = 0;
   uppdateraPoäng(pScore, spelarVinst);
